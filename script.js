@@ -29,7 +29,7 @@ var shoots = {
     groupShoot.forEach((shoot) => {
       shoot.move();
 
-      if (shoot.y <= -100) { //deletar os tiros
+      if (shoot.y <= -100) {
         groupShoot.splice(shoot[0], 1)
       }
 
@@ -42,25 +42,47 @@ var meteors = {
   time: 0,
   spawMeteors(){
     this.time += 1;
+
+    size = Math.random() * (80 - 50) + 50;
+    posx = Math.random() * (450 - 10) + 10;
+
     if (this.time >= 60) {
       this.time = 0;
-      groupMeteors.push(new Meteors(0,0,50,50,"assets/meteoro.png"));
+      groupMeteors.push(new Meteors(posx, -100,size,size,"assets/meteoro.png"));
     }
   },
+
+  destroyMeteors(){
+    groupShoot.forEach((shoot) => {
+      groupMeteors.forEach((meteors) => {
+        if (shoot.collide(meteors)) {
+          groupShoot.splice(groupShoot.indexOf(shoot), 1);
+          groupMeteors.splice(groupMeteors.indexOf(meteors), 1);
+        }
+      });
+
+    });
+
+  },
+
   draw(){
     groupMeteors.forEach((m) => {
       m.draw();
     });
 
   },
+
   update(){
     this.spawMeteors();
+    this.destroyMeteors();
     groupMeteors.forEach((m) => {
       m.move();
+      if (m.y > 1000) {
+        groupMeteors.splice(groupMeteors.indexOf(m), 1);
+      }
     });
-
   },
-};
+}
 
 var infityBg = {
   bg : new Obj(0,0,500,900,"assets/fundo.png"),
@@ -111,7 +133,7 @@ var game = {
   ship : new Obj(220, 800, 60, 50,"assets/nave.png"),
 
   click(){
-    groupShoot.push(new Shoot(this.ship.x,this.ship.y,2,10,"assets/tiro.png"));
+    groupShoot.push(new Shoot(this.ship.x + this.ship.widht / 2,this.ship.y,2,10,"assets/tiro.png"));
   },
 
   moveShip(event){
@@ -125,7 +147,7 @@ var game = {
     this.ship.draw();
     shoots.draw();
     meteors.draw();
- },
+  },
 
   update(){
     infityBg.moveBg();
