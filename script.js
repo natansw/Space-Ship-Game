@@ -18,6 +18,10 @@ function changeScene(scene){
   currentScene = scene;
 };
 
+var bullets = 1;
+
+var pts = 0;
+
 var groupShoot = [];
 var shoots = {
   draw(){
@@ -44,7 +48,7 @@ var meteors = {
     this.time += 1;
 
     size = Math.random() * (80 - 50) + 50;
-    posx = Math.random() * (450 - 10) + 10;
+    posx = Math.random() * (490 - 10) + 10;
 
     if (this.time >= 60) {
       this.time = 0;
@@ -58,6 +62,8 @@ var meteors = {
         if (shoot.collide(meteors)) {
           groupShoot.splice(groupShoot.indexOf(shoot), 1);
           groupMeteors.splice(groupMeteors.indexOf(meteors), 1);
+          bullets = 1;
+          pts += 1;
         }
       });
 
@@ -77,8 +83,9 @@ var meteors = {
     this.destroyMeteors();
     groupMeteors.forEach((m) => {
       m.move();
-      if (m.y > 1000) {
+      if (m.y > 900) {
         groupMeteors.splice(groupMeteors.indexOf(m), 1);
+        changeScene(gameover);
       }
     });
   },
@@ -133,7 +140,10 @@ var game = {
   ship : new Obj(220, 800, 60, 50,"assets/nave.png"),
 
   click(){
-    groupShoot.push(new Shoot(this.ship.x + this.ship.widht / 2,this.ship.y,2,10,"assets/tiro.png"));
+    if (bullets > 0) {
+      bullets -= 1;
+      groupShoot.push(new Shoot(this.ship.x + this.ship.width / 2,this.ship.y,2,10,"assets/tiro.png"));
+    }
   },
 
   moveShip(event){
@@ -153,19 +163,35 @@ var game = {
     infityBg.moveBg();
     shoots.update();
     meteors.update();
+    this.score.update_text(pts);
   },
 };
 
 var gameover = {
 
   score : new Text("0"),
+  label_gameober : new Text("GameOver"),
 
   draw(){
     infityBg.draw();
     this.score.draw_text(30,"arial", 40, 40, "white");
+    this.label_gameober.draw_text(60,"arial", 100, 450, "white");
   },
   update(){
     infityBg.moveBg();
+    this.score.update_text(pts);
+  },
+
+  cleanScene(){
+    pts = 0;
+    bullets = 1;
+    groupMeteors = [];
+    groupShoot = [];
+  },
+
+  click(){
+    this.cleanScene();
+    changeScene(menu);
   },
 };
 
