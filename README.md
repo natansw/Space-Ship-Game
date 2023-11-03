@@ -3,7 +3,7 @@
 # **Projeto - SpaceShip - Game**
 
 ## **Sobre:**
-Este projeto foi desenvolvido em um curso sobre desenvolvimento de jogos com Javascript, sendo o último de 4 jogos que são produzidos durante o curso. O objetivo do jogo é controlar a nave para atirar contra e destruir o maior número possível de meteoros que caem pelo cenário com tamanhos, velocidades e direções todos programados pra serem aleatórios. Pra dificultar o jogo, a nave dispara apenas um tiro por vez, sendo possível atirar novamente só  depois que um meteoro for destruído. O gameover ocorre quando o jogador deixa qualquer meteoro passar por todo o cenário sem ser destruído.
+Este projeto foi desenvolvido em um curso sobre desenvolvimento de jogos com Javascript, sendo o último de 4 jogos que são produzidos durante o curso. O objetivo do jogo é controlar a nave para atirar contra e destruir o maior número possível de meteoros que caem pelo cenário com tamanhos, velocidades e direções todos programados pra serem aleatórios. Pra dificultar o jogo, a nave dispara apenas um tiro por vez, sendo possível atirar novamente só  depois que um meteoro for destruído. O game over ocorre quando o jogador deixa qualquer meteoro passar por todo o cenário sem ser destruído.
 
 ---
 ## **Como jogar:**
